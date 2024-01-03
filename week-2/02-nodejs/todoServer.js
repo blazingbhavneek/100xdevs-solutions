@@ -39,11 +39,49 @@
 
   Testing the server - run `npm run test-todoServer` command in terminal
  */
-  const express = require('express');
-  const bodyParser = require('body-parser');
-  
-  const app = express();
-  
-  app.use(bodyParser.json());
-  
-  module.exports = app;
+const express = require('express');
+const bodyParser = require('body-parser');
+
+const app = express();
+
+app.use(bodyParser.json());
+
+let todo_list = [];
+
+app.get('/todos', (req, res)=>{
+  res.status(200).json(todo_list);
+});
+
+app.get('/todos/:id', (req, res)=>{
+  let index = todo_list.findIndex(obj => obj['id'] === req.params.id);
+  console.log(todo_list);
+  if(index===-1){
+    res.status(404).send();
+    return;
+  }
+  res.status(200).send(todo_list[index]);
+});
+
+app.put('/todos/:id', (req, res)=>{
+  let index = todo_list.findIndex(obj => obj['id'] === req.params.id);
+  if(index===-1) res.status(404).send();
+  else{
+    todo_list[index].title = req.body.title
+    todo_list[index].completed = req.body.completed
+  }
+  res.status(200).send();
+});
+
+app.post('/todos', (req, res)=>{
+  let item = {
+    id: Math.floor(Math.random() * 1000000),
+    title: req.body.title,
+    completed: false,
+    description: req.body.description
+  };
+
+  todo_list.push(item);
+  res.status(201).json(item);
+});
+
+module.exports = app;

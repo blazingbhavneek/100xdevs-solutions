@@ -4,6 +4,13 @@
 */
 
 function isPalindrome(str) {
+  let n = str.length;
+  let i =0;
+  while(i<n){
+    if(str.charAt(i)!==str.charAt(n-i-1)){
+      return false;
+    }
+  }
   return true;
 }
 

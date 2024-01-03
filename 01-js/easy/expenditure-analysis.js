@@ -14,7 +14,25 @@
 */
 
 function calculateTotalSpentByCategory(transactions) {
-  return [];
+  let mp = {};
+  transactions.forEach(element => {
+    if(mp.hasOwnProperty(element.category)){
+      let x = mp[element.category];
+      mp[element.category]+=element.price;
+    }
+    else{
+      mp[element.category] = element.price;
+    }
+  });
+
+  let ans = [];
+  Object.keys(mp).forEach(element=>{
+    ans.push({
+      "category": element,
+      "totalSpent": mp[element]
+    });
+  });
+  return ans;
 }
 
 module.exports = calculateTotalSpentByCategory;

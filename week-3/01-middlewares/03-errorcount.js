@@ -23,4 +23,14 @@ app.get('/errorCount', function(req, res) {
   res.status(200).json({ errorCount });
 });
 
+app.use((err, req, res, next)=>{
+  if(err){
+    errorCount++;
+    console.log(err);
+    res.status(404).send("Internal error occurred! Contact Admin")
+  }
+  else{
+    next();
+  }
+});
 module.exports = app;

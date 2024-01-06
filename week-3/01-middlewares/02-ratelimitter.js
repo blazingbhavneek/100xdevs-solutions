@@ -17,10 +17,10 @@ setInterval(() => {
 }, 1000)
 
 app.use((req, res, next)=>{
-  let user = req.header.user-id;
+  let user = req.header["user-id"];
   if(user in numberOfRequestsForUser){
-    numberOfRequestsForUser[user]++;
-    if(numberOfRequestsForUser[user]>4){
+    numberOfRequestsForUser[user]=numberOfRequestsForUser[user]+1;
+    if(numberOfRequestsForUser[user]>5){
       res.status(404).send();
       return;
     }

@@ -9,14 +9,31 @@
     function addTodo(){
         let title = document.getElementById('title').value;
         let desc = document.getElementById('desc').value;
-        console.log(title, desc);
-        document.getElementById('container').innerHTML=`
-        <div>
-            <div>${title}</div>
-            <div>${desc}</div>
-            <button>Mark as done!</button>
-        </div>
-        `;
+        // console.log(title, desc);
+        // document.getElementById('container').innerHTML=`
+        // <div>
+        //     <div>${title}</div>
+        //     <div>${desc}</div>
+        //     <button>Mark as done!</button>
+        // </div>
+        // `;
+
+        /////////// Can automate this code ///////////
+        newdiv = document.createElement('div');
+        let newtitle = document.createElement('div')
+        let newdesc = document.createElement('div');
+        let newbut = document.createElement('button');
+        let brk = document.createElement('br');
+        newtitle.innerHTML=title;
+        newdesc.innerHTML=desc;
+        newbut.innerHTML="Mark as done";
+        newdiv.appendChild(newtitle);
+        newdiv.appendChild(newdesc);
+        newdiv.appendChild(newbut);
+        newdiv.appendChild(brk);
+        /////////////////////////////////
+
+        document.getElementById('container').appendChild(newdiv);
     }
 </script>
 <body>

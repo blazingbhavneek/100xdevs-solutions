@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<script>
+    function add(){
+        // alert("Hi")
+        let a = parseInt(document.getElementById('a').value)
+        let b = parseInt(document.getElementById('b').value)
+        let res = fetch("https://sum-server.100xdevs.com/sum?a="+a+"&b="+b);
+        const ele = document.getElementById('ans');
+        res.then((data)=>{
+            data.text().then((data)=>{
+                console.log(data);
+                ele.innerHTML=data;
+            });
+        })
+        // console.log(res)
+        // ele.innerHTML=a+b;
+    }
+</script>
+<body>
+    <input type="text" id="a"><br></br>
+    <input type="text" id="b"><br></br>
+    <button onclick="add()">Calculate Sum</button><br></br>
+    <div id="ans">Press the button for answer!</div>
+</body>
+</html>

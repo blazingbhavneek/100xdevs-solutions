@@ -5,6 +5,13 @@
     <title>Document</title>
 </head>
 <script>
+    const tout = setTimeout(()=>{}, 1000);
+    function debounce(){
+        clearTimeout(tout);
+        tout = setTimeout(()=>{
+            add()
+        }, 1000);
+    }
     function add(){
         // alert("Hi")
         let a = parseInt(document.getElementById('a').value)
@@ -22,9 +29,9 @@
     }
 </script>
 <body>
-    <input type="text" id="a"><br></br>
-    <input type="text" id="b"><br></br>
-    <button onclick="add()">Calculate Sum</button><br></br>
+    <input oninput="debounce()" type="text" id="a"><br></br>
+    <input oninput="debounce()" type="text" id="b"><br></br>
+    <!-- <button onclick="add()">Calculate Sum</button><br></br> -->
     <div id="ans">Press the button for answer!</div>
 </body>
 </html>

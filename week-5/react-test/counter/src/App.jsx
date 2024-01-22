@@ -3,19 +3,15 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-let state = {
-  count:0
-};
-
 function App() {
+  const [count, setCount] = useState(0);
 
   function ochandler(){
-    state.count=state.count+1;
-    console.log(state.count);
+    setCount(count+1);
   }
   return (
     <div>
-      <button onClick={ochandler}>Count {state.count}</button>
+      <button onClick={ochandler}>Count {count}</button>
     </div>
   )
 }

@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 const express = require('express');
 const mongoose = require('mongoose');
+const mongopass = require('./mongopass'); 
 const app = express();
 const port = 3000;
 
-mongoose.connect('mongodb://localhost:27017/your-database', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://bhavneek:'+mongopass+'@cluster0.eomkxnm.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(express.json());
 

@@ -19,11 +19,13 @@ app.get('/todos', async (req, res)=>{
 });
 
 app.post('/todos', async (req, res)=>{
+    // console.log(req);
     const payload = req.body;
     const parsedPayload = createTodo.safeParse(payload);
     if(!parsedPayload.success){
         res.status(411).json({
-            message:"Wrong Inputs sent"
+            message:"Wrong Inputs sent",
+            zod: parsedPayload
         });
         return;
     }
@@ -35,7 +37,7 @@ app.post('/todos', async (req, res)=>{
     })
 
     res.json({
-        message: "ToDo created"
+        message: "To-Do created"
     })
 });
 
@@ -50,10 +52,14 @@ app.put('/todos', async (req, res)=>{
         return;
     }
 
-    await Todo.update({
+    await Todo.updateOne({
         _id: payload.id
     }, {
-        completed:true
+        completed: true
+    })
+
+    res.json({
+        message: "Todo updated!"
     })
 });
 

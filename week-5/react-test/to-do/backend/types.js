@@ -3,15 +3,15 @@ const { z } = require('zod');
 const titleSchema = z.string().max(50);
 const descSchema = z.string();
 const idSchema = z.string();
-const doneSchema = z.string().enum(['True', 'False']);
+const doneSchema = z.boolean();
 
-const createTodo = zod.object({
+const createTodo = z.object({
     title: titleSchema,
     description: descSchema,
     done: doneSchema
 })
 
-const updateTodo = zod.object({
+const updateTodo = z.object({
     id: idSchema
 })
 

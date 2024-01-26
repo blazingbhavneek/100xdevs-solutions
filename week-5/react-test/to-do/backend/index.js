@@ -1,11 +1,9 @@
 /* eslint-disable no-unused-vars */
 const express = require('express');
-const mongoose = require('mongoose');
-const mongopass = require('./mongopass'); 
+const { createTodo, updateTodo } = require('./types');
+const { Todo } = require('./db');
 const app = express();
 const port = 3000;
-
-mongoose.connect('mongodb+srv://bhavneek:'+mongopass+'@cluster0.eomkxnm.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(express.json());
 
@@ -14,24 +12,62 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-app.get('/todos', (req, res)=>{
+app.get('/todos', async (req, res)=>{
     // res.send(todos)
+    const todos = await Todo.find({});
+    res.json({todos});
 });
 
-app.post('/todos', (req, res)=>{
-    // res.send(todos)
+app.post('/todos', async (req, res)=>{
+    const payload = req.body;
+    const parsedPayload = createTodo.safeParse(payload);
+    if(!parsedPayload.success){
+        res.status(411).json({
+            message:"Wrong Inputs sent"
+        });
+        return;
+    }
+
+    await Todo.create({
+        title: payload.title,
+        description: payload.description,
+        completed: false
+    })
+
+    res.json({
+        message: "ToDo created"
+    })
 });
 
-app.put('/todos', (req, res)=>{
+app.put('/todos', async (req, res)=>{
     // res.send(todos)
+    const payload = req.body;
+    const parsedPayload = updateTodo.safeParse(payload);
+    if(!parsedPayload.success){
+        res.status(411).json({
+            message: "Wrong type of ID"
+        })
+        return;
+    }
+
+    await Todo.update({
+        _id: payload.id
+    }, {
+        completed:true
+    })
 });
 
 
 
 // Global catch
 app.use((err, req, res, next) => {
-    console.error(err);
-    res.status(500).send('Internal Server Error');
+    if(err){
+        console.log(err);
+        res.status(404).send("Internal error occurred! Contact Admin")
+      }
+    else{
+        next();
+    }
 });
 
 app.listen(port, () => {
